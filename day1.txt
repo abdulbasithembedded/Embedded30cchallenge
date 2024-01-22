@@ -6,7 +6,7 @@
 // Define a structure for an event
 struct Event {
     time_t timestamp;
-    char data[100]; // Adjust the size based on your data requirements
+    char data[100]; 
     struct Event *next;
 };
 
@@ -50,20 +50,16 @@ void freeEvents(struct Event *head) {
         free(temp);
     }
 }
-
 int main() {
     // Sample usage
     struct Event *eventList = NULL;
-
     // Create events and insert them into the linked list
     insertEvent(&eventList, createEvent(time(NULL), "Event 1"));
     insertEvent(&eventList, createEvent(time(NULL), "Event 2"));
     insertEvent(&eventList, createEvent(time(NULL), "Event 3"));
-
     // Print all events
     printEvents(eventList);
-
-    // Free the allocated memory
+     // Free the allocated memory
     freeEvents(eventList);
 
     return 0;
