@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+// Define a structure for an event
+struct Event {
+    time_t timestamp;
+    char data[100]; // Adjust the size based on your data requirements
+    struct Event *next;
+};
+
+// Function to create a new event
+struct Event* createEvent(time_t timestamp, const char* data) {
+    struct Event *newEvent = (struct Event*)malloc(sizeof(struct Event));
+    if (newEvent == NULL) {
+        fprintf(stderr, "Memory allocation error\n");
+        exit(EXIT_FAILURE);
+    }
+
+    newEvent->timestamp = timestamp;
+    strncpy(newEvent->data, data, sizeof(newEvent->data) - 1);
+    newEvent->data[sizeof(newEvent->data) - 1] = '\0'; // Ensure null-termination
+    newEvent->next = NULL;
+
+    return newEvent;
+}
+
+// Function to insert an event at the beginning of the linked list
+void insertEvent(struct Event **head, struct Event *newEvent) {
+    newEvent->next = *head;
+    *head = newEvent;
+}
+
+// Function to print all events in the linked list
+void printEvents(struct Event *head) {
+    struct Event *current = head;
+    while (current != NULL) {
+        printf("Timestamp: %lld, Data: %s\n", (long long)current->timestamp, current->data);
+        current = current->next;
+    }
+}
+
+// Function to free the memory allocated for the linked list
+void freeEvents(struct Event *head) {
+    struct Event *current = head;
+    while (current != NULL) {
+        struct Event *temp = current;
+        current = current->next;
+        free(temp);
+    }
+}
+
+int main() {
+    // Sample usage
+    struct Event *eventList = NULL;
+
+    // Create events and insert them into the linked list
+    insertEvent(&eventList, createEvent(time(NULL), "Event 1"));
+    insertEvent(&eventList, createEvent(time(NULL), "Event 2"));
+    insertEvent(&eventList, createEvent(time(NULL), "Event 3"));
+
+    // Print all events
+    printEvents(eventList);
+
+    // Free the allocated memory
+    freeEvents(eventList);
+
+    return 0;
+}
