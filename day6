@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Function prototypes for mathematical operations
+double add(double, double);
+double subtract(double, double);
+double multiply(double, double);
+double divide(double, double);
+
+// Function pointer type for mathematical operation
+typedef double (*Operation)(double, double);
+
+int main() {
+    double num1, num2, result;
+    int choice;
+
+    do {
+        // Display menu
+        printf("\nMenu:\n");
+        printf("1. Addition\n");
+        printf("2. Subtraction\n");
+        printf("3. Multiplication\n");
+        printf("4. Division\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        // Perform operation based on user's choice
+        switch (choice) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                // Prompt user for operands
+                printf("Enter two numbers: ");
+                scanf("%lf %lf", &num1, &num2);
+
+                // Define function pointer based on user's choice
+                Operation op;
+                switch (choice) {
+                    case 1:
+                        op = add;
+                        break;
+                    case 2:
+                        op = subtract;
+                        break;
+                    case 3:
+                        op = multiply;
+                        break;
+                    case 4:
+                        op = divide;
+                        break;
+                }
+
+                // Perform operation and display result
+                result = op(num1, num2);
+                printf("Result: %.2lf\n", result);
+                break;
+            case 5:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+
+// Implementation of mathematical operations
+double add(double x, double y) {
+    return x + y;
+}
+
+double subtract(double x, double y) {
+    return x - y;
+}
+
+double multiply(double x, double y) {
+    return x * y;
+}
+
+double divide(double x, double y) {
+    if (y != 0)
+        return x / y;
+    else {
+        printf("Error: Division by zero\n");
+        return 0.0;
+    }
+}
