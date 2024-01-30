@@ -1,0 +1,53 @@
+#include <stdio.h>
+
+// Function to check if a bit is set at a specific position
+int is_bit_set(unsigned int num, unsigned int position) {
+    return (num & (1 << position)) != 0;
+}
+
+// Function to set a range of bits in a number
+unsigned int set_bits(unsigned int num, unsigned int start, unsigned int end) {
+    unsigned int mask = (1 << (end - start + 1)) - 1;
+    mask <<= start;
+    return num | mask;
+}
+
+// Function to clear a range of bits in a number
+unsigned int clear_bits(unsigned int num, unsigned int start, unsigned int end) {
+    unsigned int mask = (1 << (end - start + 1)) - 1;
+    mask <<= start;
+    mask = ~mask;
+    return num & mask;
+}
+
+// Function to toggle a bit at a specific position
+unsigned int toggle_bit(unsigned int num, unsigned int position) {
+    return num ^ (1 << position);
+}
+
+int main() {
+    unsigned int num = 0b10101010; // Initial number: 0xAA
+
+    printf("Initial number: 0x%X\n", num);
+
+    // Check if bit at position 2 is set
+    if (is_bit_set(num, 2)) {
+        printf("Bit at position 2 is set.\n");
+    } else {
+        printf("Bit at position 2 is not set.\n");
+    }
+
+    // Set bits from position 3 to 6
+    num = set_bits(num, 3, 6);
+    printf("Number after setting bits 3 to 6: 0x%X\n", num);
+
+    // Clear bits from position 4 to 5
+    num = clear_bits(num, 4, 5);
+    printf("Number after clearing bits 4 to 5: 0x%X\n", num);
+
+    // Toggle bit at position 1
+    num = toggle_bit(num, 1);
+    printf("Number after toggling bit at position 1: 0x%X\n", num);
+
+    return 0;
+}
