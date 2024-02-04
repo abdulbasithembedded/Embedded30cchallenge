@@ -1,0 +1,57 @@
+#include <stdio.h>
+
+int count_set_bits(int n) {
+    /*
+    Counts the number of set bits (1s) in the binary representation of n.
+    */
+    int count = 0;
+    while (n) {
+        count += n & 1;
+        n >>= 1;
+    }
+    return count;
+}
+
+int toggle_bit(int n, int k) {
+    /*
+    Toggles the kth bit of n (0-based indexing).
+    */
+    return n ^ (1 << k);
+}
+
+int is_bit_set(int n, int k) {
+    /*
+    Checks if the kth bit of n is set (1) or not (0).
+    */
+    return (n & (1 << k)) != 0;
+}
+
+int unset_bit(int n, int k) {
+    /*
+    Unsets the kth bit of n (0-based indexing).
+    */
+    return n & ~(1 << k);
+}
+
+int highest_set_bit(int n) {
+    /*
+    Finds the position of the highest set bit in n (0-based indexing).
+    */
+    int position = 0;
+    while (n) {
+        position++;
+        n >>= 1;
+    }
+    return position - 1;
+}
+
+int main() {
+    int num = 43;
+    printf("Binary representation of %d is: %d\n", num);
+    printf("Number of set bits: %d\n", count_set_bits(num));
+    printf("Toggle bit at position 3: %d\n", toggle_bit(num, 3));
+    printf("Is bit 2 set? %d\n", is_bit_set(num, 2));
+    printf("Number after unsetting bit 2: %d\n", unset_bit(num, 2));
+    printf("Position of highest set bit: %d\n", highest_set_bit(num));
+    return 0;
+}
