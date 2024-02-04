@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+//  function pointer types for different tasks
+typedef void (*TaskFunction)(void);
+
+// Task functions
+void task1(void) {
+    printf("Task 1\n");
+}
+
+void task2(void) {
+    printf("Task 2\n");
+}
+
+void task3(void) {
+    printf("Task 3\n");
+}
+
+// Function to perform a task based on the provided function pointer
+void perform_task(TaskFunction task) {
+    printf("Performing task...\n");
+    task(); // Call the task function
+}
+
+int main() {
+    // Example usage
+    TaskFunction tasks[] = {task1, task2, task3};
+    
+    // Perform tasks sequentially
+    for (int i = 0; i < sizeof(tasks) / sizeof(TaskFunction); i++) {
+        perform_task(tasks[i]);
+    }
+
+    return 0;
+}
